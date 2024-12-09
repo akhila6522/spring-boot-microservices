@@ -8,8 +8,29 @@ pipeline {
       }
         stage('Build') {
             steps {
-                sh 'mvn clean package'
+                sh 'mvn clean package -DskipDockerBuild'
             }
+        }
+         stage('Archive JARs') {
+            steps {
+                // Archive built JAR files
+                script {
+                    def services = ['product-service', 'order-service', 'inventory-service', 
+                                    'discovery-server', 'api-gateway', 'notification-service']
+                    services.each { service ->
+                        archiveArtifacts artifacts: "${service}/target/*.jar", allowEmptyArchive: false
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build and packaging completed successfully!'
+        }
+        failure {
+            echo 'Build failed. Please check the logs.'
         }
     }
 }
