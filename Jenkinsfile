@@ -6,12 +6,12 @@ pipeline {
           git branch: 'master', url: 'https://github.com/akhila6522/spring-boot-microservices.git'
         }
       }
-        stages('Build') {
+        stage('Build') {
             steps {
-                sh.'mvn clean package'
+                sh 'mvn clean package'
             }
         }
-        stages('Test') {
+        stage('Test') {
             steps {
                 sh 'mvn test'
             }
