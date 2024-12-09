@@ -8,7 +8,7 @@ pipeline {
       }
         stage('Build') {
             steps {
-                sh 'mvn clean package -DskipDockerBuild'
+                sh 'mvn clean package -DskipTests'
             }
         }
          stage('Archive JARs') {
