@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    options {
+        checkoutToSubdirectory('src')
+    }
     stages {
       stage('checkout') {
         steps {
